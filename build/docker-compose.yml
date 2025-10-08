@@ -1,0 +1,55 @@
+version: '3.4'
+
+services:
+  component_a:
+    image: ${COMPONENT_A_IMAGE}:${COMPONENT_A_VERSION}
+    build:
+      context: ../component_a
+      dockerfile: build/Dockerfile
+    env_file:
+      - .env
+      - ../component_a/build/.env
+    stdin_open: true
+    tty: true
+    ulimits:
+      memlock: -1 # set upper limit for how much memory is locked for the container (-1 means lock as much as the container uses)
+    shm_size: 32gb
+    ports:
+      - ${COMPONENT_A_HOST_PORT}:${COMPONENT_A_CONTAINER_PORT} # FastAPI Ports
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    volumes:
+      - ../models:/models
+      - ../component_a/src:/workspace/src # Mounting source code for debugging purposes only; source code should be added proper in Dockerfile.
+    # command: /bin/bash # Uncomment this to debug container
+  component_b:
+    image: ${COMPONENT_B_IMAGE}:${COMPONENT_B_VERSION}
+    build:
+      context: ../component_b
+      dockerfile: build/Dockerfile
+    env_file:
+      - .env
+      - ../component_b/build/.env
+    stdin_open: true
+    tty: true
+    ulimits:
+      memlock: -1 # set upper limit for how much memory is locked for the container (-1 means lock as much as the container uses)
+    shm_size: 32gb
+    ports:
+      - ${COMPONENT_B_HOST_PORT}:${COMPONENT_B_CONTAINER_PORT} # FastAPI Ports
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    volumes:
+      - ../models:/models
+      - ../component_b/src:/workspace/src # Mounting source code for debugging purposes only; source code should be added proper in Dockerfile.
+    # command: /bin/bash # Uncomment this to debug container
