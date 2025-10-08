@@ -71,14 +71,18 @@ Notes:
 - To list containers, run docker ps -a — the container name appears under the NAMES column.
 - After identifying your container, you can run commands inside it using docker exec.
 
+## Git practices
+1. Features should be developed on branches, then merged by opening a Pull Request subsequently. One should not commit directly to main.
+    - You can enable branch protection to ensure that this rule is followed
+2. Write meaningful commit messages
+    - Prefix each commit by indicating the nature of it: `fix`, `doc`, `feat` etc
+    - You may refer to [here](https://gist.github.com/qoomon/5dfcdf8eec66a051ecd85625518cfd13) for more commit messaging guidelines
 
 ----------------------------------------
 ----------------------------------------
 ----------------------------------------
 # Actual README Structure
-----------------------------------------
-----------------------------------------
-----------------------------------------
+
 
 # Project Name
 
