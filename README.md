@@ -2,7 +2,7 @@
 
 ## Project Structure
 
-### Repository Root
+### Project Level Configuration
 1) Linting + Pre-commit hooks
     ```
     # It’s recommended to use a virtual or conda environment for this.
@@ -27,7 +27,8 @@
 5) `README.md`
     - Refer to [below](#actual-readme-structure)
 
-### Components Folder
+### Component Level Configuration
+#### Building Components
 1) `component_x/build/requirements.txt`
     - Exclude libraries already provided by the base image to prevent dependency conflicts (e.g. remove `torch`, `torchvision`, etc. if using a PyTorch base image).
     - Align your `transformers` version with the corresponding `torch` version so that `transformers` does not trigger a reinstallation of `torch`.
@@ -44,7 +45,7 @@
     - Include all **component-specific** environment configurations here.
 
 
-### Source Codes
+#### Source Codes
 1) `component_x/src/main.py`
     - `main.py` should implement a FastAPI service exposing the component’s functionality.
     - Document the available endpoints and HTTP methods (`GET`, `POST`, etc.) in `README.md`, along with example request bodies.
